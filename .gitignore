@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+
+# PyTorch checkpoints and large binaries
+*.pt
+*.pth
+*.bin
+checkpoints/
+
+# Datasets and raw / cleaned corpora (Exceeds GitHub 100MB limit)
+data/raw/
+data/clean/
+data/tokenized/
+data/tokenizer_work/
+data/*.txt
+data/*.gz
+data/*.bz2
+
+# OS / Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

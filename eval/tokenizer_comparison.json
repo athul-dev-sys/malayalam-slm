@@ -1,0 +1,2389 @@
+{
+ "bbpe_16k": {
+  "vocab_size": 16000,
+  "tokens_per_word": 7.510679578444648,
+  "tokens_per_char": 0.7333885192287374,
+  "unk_rate": 0.0,
+  "roundtrip_exact_rate": 1.0,
+  "zwj_paras": 15020,
+  "zwj_kept": 15020,
+  "chillu": {
+   "കേരളം": {
+    "n_tokens": 4,
+    "pieces": [
+     "à´ķ",
+     "àµĩ",
+     "à´°à´³",
+     "à´Ĥ"
+    ],
+    "roundtrip": true
+   },
+   "നമ്മൾ": {
+    "n_tokens": 3,
+    "pieces": [
+     "à´¨à´®",
+     "àµį",
+     "à´®àµ¾"
+    ],
+    "roundtrip": true
+   },
+   "ഇന്ത്യയിൽ": {
+    "n_tokens": 7,
+    "pieces": [
+     "à´ĩà´¨",
+     "àµį",
+     "à´¤",
+     "àµį",
+     "à´¯à´¯",
+     "à´¿",
+     "àµ½"
+    ],
+    "roundtrip": true
+   },
+   "സ്ത്രീ": {
+    "n_tokens": 6,
+    "pieces": [
+     "à´¸",
+     "àµį",
+     "à´¤",
+     "àµį",
+     "à´°",
+     "àµĢ"
+    ],
+    "roundtrip": true
+   },
+   "ജ്ഞാനം": {
+    "n_tokens": 6,
+    "pieces": [
+     "à´ľ",
+     "àµį",
+     "à´ŀ",
+     "à´¾",
+     "à´¨",
+     "à´Ĥ"
+    ],
+    "roundtrip": true
+   },
+   "ക്ഷേത്രം": {
+    "n_tokens": 8,
+    "pieces": [
+     "à´ķ",
+     "àµį",
+     "à´·",
+     "àµĩ",
+     "à´¤",
+     "àµį",
+     "à´°",
+     "à´Ĥ"
+    ],
+    "roundtrip": true
+   },
+   "ശ്രീകൃഷ്ണൻ": {
+    "n_tokens": 9,
+    "pieces": [
+     "à´¶",
+     "àµį",
+     "à´°",
+     "àµĢ",
+     "à´ķ",
+     "àµĥ",
+     "à´·",
+     "àµį",
+     "à´£àµ»"
+    ],
+    "roundtrip": true
+   },
+   "വിദ്യാഭ്യാസം": {
+    "n_tokens": 12,
+    "pieces": [
+     "à´µ",
+     "à´¿",
+     "à´¦",
+     "àµį",
+     "à´¯",
+     "à´¾",
+     "à´Ń",
+     "àµį",
+     "à´¯",
+     "à´¾",
+     "à´¸",
+     "à´Ĥ"
+    ],
+    "roundtrip": true
+   },
+   "സംസ്ഥാനം": {
+    "n_tokens": 8,
+    "pieces": [
+     "à´¸",
+     "à´Ĥ",
+     "à´¸",
+     "àµį",
+     "à´¥",
+     "à´¾",
+     "à´¨",
+     "à´Ĥ"
+    ],
+    "roundtrip": true
+   },
+   "പ്രധാനമന്ത്രി": {
+    "n_tokens": 10,
+    "pieces": [
+     "à´ª",
+     "àµį",
+     "à´°à´§",
+     "à´¾",
+     "à´¨à´®à´¨",
+     "àµį",
+     "à´¤",
+     "àµį",
+     "à´°",
+     "à´¿"
+    ],
+    "roundtrip": true
+   },
+   "വിമർശനം": {
+    "n_tokens": 4,
+    "pieces": [
+     "à´µ",
+     "à´¿",
+     "à´®àµ¼à´¶à´¨",
+     "à´Ĥ"
+    ],
+    "roundtrip": true
+   },
+   "സങ്കടം": {
+    "n_tokens": 4,
+    "pieces": [
+     "à´¸à´Ļ",
+     "àµį",
+     "à´ķà´Ł",
+     "à´Ĥ"
+    ],
+    "roundtrip": true
+   },
+   "ദൃഷ്ടി": {
+    "n_tokens": 6,
+    "pieces": [
+     "à´¦",
+     "àµĥ",
+     "à´·",
+     "àµį",
+     "à´Ł",
+     "à´¿"
+    ],
+    "roundtrip": true
+   },
+   "ഋതു": {
+    "n_tokens": 2,
+    "pieces": [
+     "à´ĭà´¤",
+     "àµģ"
+    ],
+    "roundtrip": true
+   },
+   "ൠയം": {
+    "n_tokens": 4,
+    "pieces": [
+     "àµ",
+     "ł",
+     "à´¯",
+     "à´Ĥ"
+    ],
+    "roundtrip": true
+   },
+   "നമ്പർ": {
+    "n_tokens": 3,
+    "pieces": [
+     "à´¨à´®",
+     "àµį",
+     "à´ªàµ¼"
+    ],
+    "roundtrip": true
+   },
+   "അമ്മയ്‍": {
+    "n_tokens": 4,
+    "pieces": [
+     "à´ħà´®",
+     "àµį",
+     "à´®à´¯",
+     "àµįâĢį"
+    ],
+    "roundtrip": true
+   },
+   "കഴിഞ്ഞു": {
+    "n_tokens": 6,
+    "pieces": [
+     "à´ķà´´",
+     "à´¿",
+     "à´ŀ",
+     "àµį",
+     "à´ŀ",
+     "àµģ"
+    ],
+    "roundtrip": true
+   },
+   "താഴെ": {
+    "n_tokens": 4,
+    "pieces": [
+     "à´¤",
+     "à´¾",
+     "à´´",
+     "àµĨ"
+    ],
+    "roundtrip": true
+   },
+   "മുകളിൽ": {
+    "n_tokens": 5,
+    "pieces": [
+     "à´®",
+     "àµģ",
+     "à´ķà´³",
+     "à´¿",
+     "àµ½"
+    ],
+    "roundtrip": true
+   }
+  }
+ },
+ "bbpe_32k": {
+  "vocab_size": 32000,
+  "tokens_per_word": 7.501802601529452,
+  "tokens_per_char": 0.7325217171122221,
+  "unk_rate": 0.0,
+  "roundtrip_exact_rate": 1.0,
+  "zwj_paras": 15020,
+  "zwj_kept": 15020,
+  "chillu": {
+   "കേരളം": {
+    "n_tokens": 4,
+    "pieces": [
+     "à´ķ",
+     "àµĩ",
+     "à´°à´³",
+     "à´Ĥ"
+    ],
+    "roundtrip": true
+   },
+   "നമ്മൾ": {
+    "n_tokens": 3,
+    "pieces": [
+     "à´¨à´®",
+     "àµį",
+     "à´®àµ¾"
+    ],
+    "roundtrip": true
+   },
+   "ഇന്ത്യയിൽ": {
+    "n_tokens": 7,
+    "pieces": [
+     "à´ĩà´¨",
+     "àµį",
+     "à´¤",
+     "àµį",
+     "à´¯à´¯",
+     "à´¿",
+     "àµ½"
+    ],
+    "roundtrip": true
+   },
+   "സ്ത്രീ": {
+    "n_tokens": 6,
+    "pieces": [
+     "à´¸",
+     "àµį",
+     "à´¤",
+     "àµį",
+     "à´°",
+     "àµĢ"
+    ],
+    "roundtrip": true
+   },
+   "ജ്ഞാനം": {
+    "n_tokens": 6,
+    "pieces": [
+     "à´ľ",
+     "àµį",
+     "à´ŀ",
+     "à´¾",
+     "à´¨",
+     "à´Ĥ"
+    ],
+    "roundtrip": true
+   },
+   "ക്ഷേത്രം": {
+    "n_tokens": 8,
+    "pieces": [
+     "à´ķ",
+     "àµį",
+     "à´·",
+     "àµĩ",
+     "à´¤",
+     "àµį",
+     "à´°",
+     "à´Ĥ"
+    ],
+    "roundtrip": true
+   },
+   "ശ്രീകൃഷ്ണൻ": {
+    "n_tokens": 9,
+    "pieces": [
+     "à´¶",
+     "àµį",
+     "à´°",
+     "àµĢ",
+     "à´ķ",
+     "àµĥ",
+     "à´·",
+     "àµį",
+     "à´£àµ»"
+    ],
+    "roundtrip": true
+   },
+   "വിദ്യാഭ്യാസം": {
+    "n_tokens": 12,
+    "pieces": [
+     "à´µ",
+     "à´¿",
+     "à´¦",
+     "àµį",
+     "à´¯",
+     "à´¾",
+     "à´Ń",
+     "àµį",
+     "à´¯",
+     "à´¾",
+     "à´¸",
+     "à´Ĥ"
+    ],
+    "roundtrip": true
+   },
+   "സംസ്ഥാനം": {
+    "n_tokens": 8,
+    "pieces": [
+     "à´¸",
+     "à´Ĥ",
+     "à´¸",
+     "àµį",
+     "à´¥",
+     "à´¾",
+     "à´¨",
+     "à´Ĥ"
+    ],
+    "roundtrip": true
+   },
+   "പ്രധാനമന്ത്രി": {
+    "n_tokens": 10,
+    "pieces": [
+     "à´ª",
+     "àµį",
+     "à´°à´§",
+     "à´¾",
+     "à´¨à´®à´¨",
+     "àµį",
+     "à´¤",
+     "àµį",
+     "à´°",
+     "à´¿"
+    ],
+    "roundtrip": true
+   },
+   "വിമർശനം": {
+    "n_tokens": 4,
+    "pieces": [
+     "à´µ",
+     "à´¿",
+     "à´®àµ¼à´¶à´¨",
+     "à´Ĥ"
+    ],
+    "roundtrip": true
+   },
+   "സങ്കടം": {
+    "n_tokens": 4,
+    "pieces": [
+     "à´¸à´Ļ",
+     "àµį",
+     "à´ķà´Ł",
+     "à´Ĥ"
+    ],
+    "roundtrip": true
+   },
+   "ദൃഷ്ടി": {
+    "n_tokens": 6,
+    "pieces": [
+     "à´¦",
+     "àµĥ",
+     "à´·",
+     "àµį",
+     "à´Ł",
+     "à´¿"
+    ],
+    "roundtrip": true
+   },
+   "ഋതു": {
+    "n_tokens": 2,
+    "pieces": [
+     "à´ĭà´¤",
+     "àµģ"
+    ],
+    "roundtrip": true
+   },
+   "ൠയം": {
+    "n_tokens": 4,
+    "pieces": [
+     "àµ",
+     "ł",
+     "à´¯",
+     "à´Ĥ"
+    ],
+    "roundtrip": true
+   },
+   "നമ്പർ": {
+    "n_tokens": 3,
+    "pieces": [
+     "à´¨à´®",
+     "àµį",
+     "à´ªàµ¼"
+    ],
+    "roundtrip": true
+   },
+   "അമ്മയ്‍": {
+    "n_tokens": 4,
+    "pieces": [
+     "à´ħà´®",
+     "àµį",
+     "à´®à´¯",
+     "àµįâĢį"
+    ],
+    "roundtrip": true
+   },
+   "കഴിഞ്ഞു": {
+    "n_tokens": 6,
+    "pieces": [
+     "à´ķà´´",
+     "à´¿",
+     "à´ŀ",
+     "àµį",
+     "à´ŀ",
+     "àµģ"
+    ],
+    "roundtrip": true
+   },
+   "താഴെ": {
+    "n_tokens": 4,
+    "pieces": [
+     "à´¤",
+     "à´¾",
+     "à´´",
+     "àµĨ"
+    ],
+    "roundtrip": true
+   },
+   "മുകളിൽ": {
+    "n_tokens": 5,
+    "pieces": [
+     "à´®",
+     "àµģ",
+     "à´ķà´³",
+     "à´¿",
+     "àµ½"
+    ],
+    "roundtrip": true
+   }
+  }
+ },
+ "bbpe_50k": {
+  "vocab_size": 50000,
+  "tokens_per_word": 7.498760177042055,
+  "tokens_per_char": 0.7322246362467195,
+  "unk_rate": 0.0,
+  "roundtrip_exact_rate": 1.0,
+  "zwj_paras": 15020,
+  "zwj_kept": 15020,
+  "chillu": {
+   "കേരളം": {
+    "n_tokens": 4,
+    "pieces": [
+     "à´ķ",
+     "àµĩ",
+     "à´°à´³",
+     "à´Ĥ"
+    ],
+    "roundtrip": true
+   },
+   "നമ്മൾ": {
+    "n_tokens": 3,
+    "pieces": [
+     "à´¨à´®",
+     "àµį",
+     "à´®àµ¾"
+    ],
+    "roundtrip": true
+   },
+   "ഇന്ത്യയിൽ": {
+    "n_tokens": 7,
+    "pieces": [
+     "à´ĩà´¨",
+     "àµį",
+     "à´¤",
+     "àµį",
+     "à´¯à´¯",
+     "à´¿",
+     "àµ½"
+    ],
+    "roundtrip": true
+   },
+   "സ്ത്രീ": {
+    "n_tokens": 6,
+    "pieces": [
+     "à´¸",
+     "àµį",
+     "à´¤",
+     "àµį",
+     "à´°",
+     "àµĢ"
+    ],
+    "roundtrip": true
+   },
+   "ജ്ഞാനം": {
+    "n_tokens": 6,
+    "pieces": [
+     "à´ľ",
+     "àµį",
+     "à´ŀ",
+     "à´¾",
+     "à´¨",
+     "à´Ĥ"
+    ],
+    "roundtrip": true
+   },
+   "ക്ഷേത്രം": {
+    "n_tokens": 8,
+    "pieces": [
+     "à´ķ",
+     "àµį",
+     "à´·",
+     "àµĩ",
+     "à´¤",
+     "àµį",
+     "à´°",
+     "à´Ĥ"
+    ],
+    "roundtrip": true
+   },
+   "ശ്രീകൃഷ്ണൻ": {
+    "n_tokens": 9,
+    "pieces": [
+     "à´¶",
+     "àµį",
+     "à´°",
+     "àµĢ",
+     "à´ķ",
+     "àµĥ",
+     "à´·",
+     "àµį",
+     "à´£àµ»"
+    ],
+    "roundtrip": true
+   },
+   "വിദ്യാഭ്യാസം": {
+    "n_tokens": 12,
+    "pieces": [
+     "à´µ",
+     "à´¿",
+     "à´¦",
+     "àµį",
+     "à´¯",
+     "à´¾",
+     "à´Ń",
+     "àµį",
+     "à´¯",
+     "à´¾",
+     "à´¸",
+     "à´Ĥ"
+    ],
+    "roundtrip": true
+   },
+   "സംസ്ഥാനം": {
+    "n_tokens": 8,
+    "pieces": [
+     "à´¸",
+     "à´Ĥ",
+     "à´¸",
+     "àµį",
+     "à´¥",
+     "à´¾",
+     "à´¨",
+     "à´Ĥ"
+    ],
+    "roundtrip": true
+   },
+   "പ്രധാനമന്ത്രി": {
+    "n_tokens": 10,
+    "pieces": [
+     "à´ª",
+     "àµį",
+     "à´°à´§",
+     "à´¾",
+     "à´¨à´®à´¨",
+     "àµį",
+     "à´¤",
+     "àµį",
+     "à´°",
+     "à´¿"
+    ],
+    "roundtrip": true
+   },
+   "വിമർശനം": {
+    "n_tokens": 4,
+    "pieces": [
+     "à´µ",
+     "à´¿",
+     "à´®àµ¼à´¶à´¨",
+     "à´Ĥ"
+    ],
+    "roundtrip": true
+   },
+   "സങ്കടം": {
+    "n_tokens": 4,
+    "pieces": [
+     "à´¸à´Ļ",
+     "àµį",
+     "à´ķà´Ł",
+     "à´Ĥ"
+    ],
+    "roundtrip": true
+   },
+   "ദൃഷ്ടി": {
+    "n_tokens": 6,
+    "pieces": [
+     "à´¦",
+     "àµĥ",
+     "à´·",
+     "àµį",
+     "à´Ł",
+     "à´¿"
+    ],
+    "roundtrip": true
+   },
+   "ഋതു": {
+    "n_tokens": 2,
+    "pieces": [
+     "à´ĭà´¤",
+     "àµģ"
+    ],
+    "roundtrip": true
+   },
+   "ൠയം": {
+    "n_tokens": 3,
+    "pieces": [
+     "àµł",
+     "à´¯",
+     "à´Ĥ"
+    ],
+    "roundtrip": true
+   },
+   "നമ്പർ": {
+    "n_tokens": 3,
+    "pieces": [
+     "à´¨à´®",
+     "àµį",
+     "à´ªàµ¼"
+    ],
+    "roundtrip": true
+   },
+   "അമ്മയ്‍": {
+    "n_tokens": 4,
+    "pieces": [
+     "à´ħà´®",
+     "àµį",
+     "à´®à´¯",
+     "àµįâĢį"
+    ],
+    "roundtrip": true
+   },
+   "കഴിഞ്ഞു": {
+    "n_tokens": 6,
+    "pieces": [
+     "à´ķà´´",
+     "à´¿",
+     "à´ŀ",
+     "àµį",
+     "à´ŀ",
+     "àµģ"
+    ],
+    "roundtrip": true
+   },
+   "താഴെ": {
+    "n_tokens": 4,
+    "pieces": [
+     "à´¤",
+     "à´¾",
+     "à´´",
+     "àµĨ"
+    ],
+    "roundtrip": true
+   },
+   "മുകളിൽ": {
+    "n_tokens": 5,
+    "pieces": [
+     "à´®",
+     "àµģ",
+     "à´ķà´³",
+     "à´¿",
+     "àµ½"
+    ],
+    "roundtrip": true
+   }
+  }
+ },
+ "spm_bpe_32k": {
+  "vocab_size": 32000,
+  "tokens_per_word": 1.9368040084758806,
+  "tokens_per_char": 0.1891213450097094,
+  "unk_rate": 0.0,
+  "roundtrip_exact_rate": 0.8975,
+  "zwj_paras": 15020,
+  "zwj_kept": 13348,
+  "chillu": {
+   "കേരളം": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁കേരളം"
+    ],
+    "roundtrip": true
+   },
+   "നമ്മൾ": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁നമ്മൾ"
+    ],
+    "roundtrip": true
+   },
+   "ഇന്ത്യയിൽ": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁ഇന്ത്യയിൽ"
+    ],
+    "roundtrip": true
+   },
+   "സ്ത്രീ": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁സ്ത്രീ"
+    ],
+    "roundtrip": true
+   },
+   "ജ്ഞാനം": {
+    "n_tokens": 2,
+    "pieces": [
+     "▁ജ്ഞ",
+     "ാനം"
+    ],
+    "roundtrip": true
+   },
+   "ക്ഷേത്രം": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁ക്ഷേത്രം"
+    ],
+    "roundtrip": true
+   },
+   "ശ്രീകൃഷ്ണൻ": {
+    "n_tokens": 2,
+    "pieces": [
+     "▁ശ്രീകൃഷ്ണ",
+     "ൻ"
+    ],
+    "roundtrip": true
+   },
+   "വിദ്യാഭ്യാസം": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁വിദ്യാഭ്യാസം"
+    ],
+    "roundtrip": true
+   },
+   "സംസ്ഥാനം": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁സംസ്ഥാനം"
+    ],
+    "roundtrip": true
+   },
+   "പ്രധാനമന്ത്രി": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁പ്രധാനമന്ത്രി"
+    ],
+    "roundtrip": true
+   },
+   "വിമർശനം": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁വിമർശനം"
+    ],
+    "roundtrip": true
+   },
+   "സങ്കടം": {
+    "n_tokens": 2,
+    "pieces": [
+     "▁സങ്ക",
+     "ടം"
+    ],
+    "roundtrip": true
+   },
+   "ദൃഷ്ടി": {
+    "n_tokens": 2,
+    "pieces": [
+     "▁ദ",
+     "ൃഷ്ടി"
+    ],
+    "roundtrip": true
+   },
+   "ഋതു": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁ഋതു"
+    ],
+    "roundtrip": true
+   },
+   "ൠയം": {
+    "n_tokens": 3,
+    "pieces": [
+     "▁",
+     "ൠ",
+     "യം"
+    ],
+    "roundtrip": true
+   },
+   "നമ്പർ": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁നമ്പർ"
+    ],
+    "roundtrip": true
+   },
+   "അമ്മയ്‍": {
+    "n_tokens": 3,
+    "pieces": [
+     "▁അമ്മ",
+     "യ",
+     "്‍"
+    ],
+    "roundtrip": true
+   },
+   "കഴിഞ്ഞു": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁കഴിഞ്ഞു"
+    ],
+    "roundtrip": true
+   },
+   "താഴെ": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁താഴെ"
+    ],
+    "roundtrip": true
+   },
+   "മുകളിൽ": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁മുകളിൽ"
+    ],
+    "roundtrip": true
+   }
+  }
+ },
+ "spm_unigram_16k": {
+  "vocab_size": 16000,
+  "tokens_per_word": 2.2388715201395444,
+  "tokens_per_char": 0.21861705745121923,
+  "unk_rate": 0.0,
+  "roundtrip_exact_rate": 0.8975,
+  "zwj_paras": 15020,
+  "zwj_kept": 13348,
+  "chillu": {
+   "കേരളം": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁കേരളം"
+    ],
+    "roundtrip": true
+   },
+   "നമ്മൾ": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁നമ്മൾ"
+    ],
+    "roundtrip": true
+   },
+   "ഇന്ത്യയിൽ": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁ഇന്ത്യയിൽ"
+    ],
+    "roundtrip": true
+   },
+   "സ്ത്രീ": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁സ്ത്രീ"
+    ],
+    "roundtrip": true
+   },
+   "ജ്ഞാനം": {
+    "n_tokens": 2,
+    "pieces": [
+     "▁ജ്ഞാന",
+     "ം"
+    ],
+    "roundtrip": true
+   },
+   "ക്ഷേത്രം": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁ക്ഷേത്രം"
+    ],
+    "roundtrip": true
+   },
+   "ശ്രീകൃഷ്ണൻ": {
+    "n_tokens": 2,
+    "pieces": [
+     "▁ശ്രീകൃഷ്ണ",
+     "ൻ"
+    ],
+    "roundtrip": true
+   },
+   "വിദ്യാഭ്യാസം": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁വിദ്യാഭ്യാസം"
+    ],
+    "roundtrip": true
+   },
+   "സംസ്ഥാനം": {
+    "n_tokens": 2,
+    "pieces": [
+     "▁സംസ്ഥാന",
+     "ം"
+    ],
+    "roundtrip": true
+   },
+   "പ്രധാനമന്ത്രി": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁പ്രധാനമന്ത്രി"
+    ],
+    "roundtrip": true
+   },
+   "വിമർശനം": {
+    "n_tokens": 2,
+    "pieces": [
+     "▁വിമർശന",
+     "ം"
+    ],
+    "roundtrip": true
+   },
+   "സങ്കടം": {
+    "n_tokens": 2,
+    "pieces": [
+     "▁സങ്കട",
+     "ം"
+    ],
+    "roundtrip": true
+   },
+   "ദൃഷ്ടി": {
+    "n_tokens": 3,
+    "pieces": [
+     "▁ദ",
+     "ൃഷ്ട",
+     "ി"
+    ],
+    "roundtrip": true
+   },
+   "ഋതു": {
+    "n_tokens": 3,
+    "pieces": [
+     "▁",
+     "ഋ",
+     "തു"
+    ],
+    "roundtrip": true
+   },
+   "ൠയം": {
+    "n_tokens": 3,
+    "pieces": [
+     "▁",
+     "ൠ",
+     "യം"
+    ],
+    "roundtrip": true
+   },
+   "നമ്പർ": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁നമ്പർ"
+    ],
+    "roundtrip": true
+   },
+   "അമ്മയ്‍": {
+    "n_tokens": 3,
+    "pieces": [
+     "▁അമ്മ",
+     "യ",
+     "്‍"
+    ],
+    "roundtrip": true
+   },
+   "കഴിഞ്ഞു": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁കഴിഞ്ഞു"
+    ],
+    "roundtrip": true
+   },
+   "താഴെ": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁താഴെ"
+    ],
+    "roundtrip": true
+   },
+   "മുകളിൽ": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁മുകളിൽ"
+    ],
+    "roundtrip": true
+   }
+  }
+ },
+ "spm_unigram_32k": {
+  "vocab_size": 32000,
+  "tokens_per_word": 1.916733645608073,
+  "tokens_per_char": 0.18716155248357783,
+  "unk_rate": 0.0,
+  "roundtrip_exact_rate": 0.8975,
+  "zwj_paras": 15020,
+  "zwj_kept": 13348,
+  "chillu": {
+   "കേരളം": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁കേരളം"
+    ],
+    "roundtrip": true
+   },
+   "നമ്മൾ": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁നമ്മൾ"
+    ],
+    "roundtrip": true
+   },
+   "ഇന്ത്യയിൽ": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁ഇന്ത്യയിൽ"
+    ],
+    "roundtrip": true
+   },
+   "സ്ത്രീ": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁സ്ത്രീ"
+    ],
+    "roundtrip": true
+   },
+   "ജ്ഞാനം": {
+    "n_tokens": 2,
+    "pieces": [
+     "▁ജ്ഞാന",
+     "ം"
+    ],
+    "roundtrip": true
+   },
+   "ക്ഷേത്രം": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁ക്ഷേത്രം"
+    ],
+    "roundtrip": true
+   },
+   "ശ്രീകൃഷ്ണൻ": {
+    "n_tokens": 2,
+    "pieces": [
+     "▁ശ്രീകൃഷ്ണ",
+     "ൻ"
+    ],
+    "roundtrip": true
+   },
+   "വിദ്യാഭ്യാസം": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁വിദ്യാഭ്യാസം"
+    ],
+    "roundtrip": true
+   },
+   "സംസ്ഥാനം": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁സംസ്ഥാനം"
+    ],
+    "roundtrip": true
+   },
+   "പ്രധാനമന്ത്രി": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁പ്രധാനമന്ത്രി"
+    ],
+    "roundtrip": true
+   },
+   "വിമർശനം": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁വിമർശനം"
+    ],
+    "roundtrip": true
+   },
+   "സങ്കടം": {
+    "n_tokens": 2,
+    "pieces": [
+     "▁സങ്കട",
+     "ം"
+    ],
+    "roundtrip": true
+   },
+   "ദൃഷ്ടി": {
+    "n_tokens": 2,
+    "pieces": [
+     "▁",
+     "ദൃഷ്ടി"
+    ],
+    "roundtrip": true
+   },
+   "ഋതു": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁ഋതു"
+    ],
+    "roundtrip": true
+   },
+   "ൠയം": {
+    "n_tokens": 3,
+    "pieces": [
+     "▁",
+     "ൠ",
+     "യം"
+    ],
+    "roundtrip": true
+   },
+   "നമ്പർ": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁നമ്പർ"
+    ],
+    "roundtrip": true
+   },
+   "അമ്മയ്‍": {
+    "n_tokens": 3,
+    "pieces": [
+     "▁അമ്മ",
+     "യ",
+     "്‍"
+    ],
+    "roundtrip": true
+   },
+   "കഴിഞ്ഞു": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁കഴിഞ്ഞു"
+    ],
+    "roundtrip": true
+   },
+   "താഴെ": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁താഴെ"
+    ],
+    "roundtrip": true
+   },
+   "മുകളിൽ": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁മുകളിൽ"
+    ],
+    "roundtrip": true
+   }
+  }
+ },
+ "spm_unigram_32k_cov9995": {
+  "vocab_size": 32000,
+  "tokens_per_word": 1.8726177132223427,
+  "tokens_per_char": 0.18285380403167728,
+  "unk_rate": 0.0005786455708707993,
+  "roundtrip_exact_rate": 0.8826,
+  "zwj_paras": 15020,
+  "zwj_kept": 13147,
+  "chillu": {
+   "കേരളം": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁കേരളം"
+    ],
+    "roundtrip": true
+   },
+   "നമ്മൾ": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁നമ്മൾ"
+    ],
+    "roundtrip": true
+   },
+   "ഇന്ത്യയിൽ": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁ഇന്ത്യയിൽ"
+    ],
+    "roundtrip": true
+   },
+   "സ്ത്രീ": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁സ്ത്രീ"
+    ],
+    "roundtrip": true
+   },
+   "ജ്ഞാനം": {
+    "n_tokens": 2,
+    "pieces": [
+     "▁ജ്ഞാന",
+     "ം"
+    ],
+    "roundtrip": true
+   },
+   "ക്ഷേത്രം": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁ക്ഷേത്രം"
+    ],
+    "roundtrip": true
+   },
+   "ശ്രീകൃഷ്ണൻ": {
+    "n_tokens": 2,
+    "pieces": [
+     "▁ശ്രീകൃഷ്ണ",
+     "ൻ"
+    ],
+    "roundtrip": true
+   },
+   "വിദ്യാഭ്യാസം": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁വിദ്യാഭ്യാസം"
+    ],
+    "roundtrip": true
+   },
+   "സംസ്ഥാനം": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁സംസ്ഥാനം"
+    ],
+    "roundtrip": true
+   },
+   "പ്രധാനമന്ത്രി": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁പ്രധാനമന്ത്രി"
+    ],
+    "roundtrip": true
+   },
+   "വിമർശനം": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁വിമർശനം"
+    ],
+    "roundtrip": true
+   },
+   "സങ്കടം": {
+    "n_tokens": 2,
+    "pieces": [
+     "▁സങ്കട",
+     "ം"
+    ],
+    "roundtrip": true
+   },
+   "ദൃഷ്ടി": {
+    "n_tokens": 2,
+    "pieces": [
+     "▁",
+     "ദൃഷ്ടി"
+    ],
+    "roundtrip": true
+   },
+   "ഋതു": {
+    "n_tokens": 3,
+    "pieces": [
+     "▁",
+     "<unk>",
+     "തു"
+    ],
+    "roundtrip": false
+   },
+   "ൠയം": {
+    "n_tokens": 3,
+    "pieces": [
+     "▁",
+     "<unk>",
+     "യം"
+    ],
+    "roundtrip": false
+   },
+   "നമ്പർ": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁നമ്പർ"
+    ],
+    "roundtrip": true
+   },
+   "അമ്മയ്‍": {
+    "n_tokens": 3,
+    "pieces": [
+     "▁അമ്മ",
+     "യ",
+     "്‍"
+    ],
+    "roundtrip": true
+   },
+   "കഴിഞ്ഞു": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁കഴിഞ്ഞു"
+    ],
+    "roundtrip": true
+   },
+   "താഴെ": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁താഴെ"
+    ],
+    "roundtrip": true
+   },
+   "മുകളിൽ": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁മുകളിൽ"
+    ],
+    "roundtrip": true
+   }
+  }
+ },
+ "spm_unigram_50k": {
+  "vocab_size": 50000,
+  "tokens_per_word": 1.7753658449374026,
+  "tokens_per_char": 0.17335753902279372,
+  "unk_rate": 0.0,
+  "roundtrip_exact_rate": 0.8975,
+  "zwj_paras": 15020,
+  "zwj_kept": 13348,
+  "chillu": {
+   "കേരളം": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁കേരളം"
+    ],
+    "roundtrip": true
+   },
+   "നമ്മൾ": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁നമ്മൾ"
+    ],
+    "roundtrip": true
+   },
+   "ഇന്ത്യയിൽ": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁ഇന്ത്യയിൽ"
+    ],
+    "roundtrip": true
+   },
+   "സ്ത്രീ": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁സ്ത്രീ"
+    ],
+    "roundtrip": true
+   },
+   "ജ്ഞാനം": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁ജ്ഞാനം"
+    ],
+    "roundtrip": true
+   },
+   "ക്ഷേത്രം": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁ക്ഷേത്രം"
+    ],
+    "roundtrip": true
+   },
+   "ശ്രീകൃഷ്ണൻ": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁ശ്രീകൃഷ്ണൻ"
+    ],
+    "roundtrip": true
+   },
+   "വിദ്യാഭ്യാസം": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁വിദ്യാഭ്യാസം"
+    ],
+    "roundtrip": true
+   },
+   "സംസ്ഥാനം": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁സംസ്ഥാനം"
+    ],
+    "roundtrip": true
+   },
+   "പ്രധാനമന്ത്രി": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁പ്രധാനമന്ത്രി"
+    ],
+    "roundtrip": true
+   },
+   "വിമർശനം": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁വിമർശനം"
+    ],
+    "roundtrip": true
+   },
+   "സങ്കടം": {
+    "n_tokens": 2,
+    "pieces": [
+     "▁സങ്കട",
+     "ം"
+    ],
+    "roundtrip": true
+   },
+   "ദൃഷ്ടി": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁ദൃഷ്ടി"
+    ],
+    "roundtrip": true
+   },
+   "ഋതു": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁ഋതു"
+    ],
+    "roundtrip": true
+   },
+   "ൠയം": {
+    "n_tokens": 3,
+    "pieces": [
+     "▁",
+     "ൠ",
+     "യം"
+    ],
+    "roundtrip": true
+   },
+   "നമ്പർ": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁നമ്പർ"
+    ],
+    "roundtrip": true
+   },
+   "അമ്മയ്‍": {
+    "n_tokens": 3,
+    "pieces": [
+     "▁അമ്മ",
+     "യ",
+     "്‍"
+    ],
+    "roundtrip": true
+   },
+   "കഴിഞ്ഞു": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁കഴിഞ്ഞു"
+    ],
+    "roundtrip": true
+   },
+   "താഴെ": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁താഴെ"
+    ],
+    "roundtrip": true
+   },
+   "മുകളിൽ": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁മുകളിൽ"
+    ],
+    "roundtrip": true
+   }
+  }
+ },
+ "muril": {
+  "vocab_size": 197258,
+  "tokens_per_word": 2.378059719823331,
+  "tokens_per_char": 0.23220824139057528,
+  "unk_rate": 0.00010132997222905019,
+  "roundtrip_exact_rate": 0.10725,
+  "zwj_paras": 15020,
+  "zwj_kept": 0,
+  "chillu": {
+   "കേരളം": {
+    "n_tokens": 1,
+    "pieces": [
+     "കേരളം"
+    ],
+    "roundtrip": true
+   },
+   "നമ്മൾ": {
+    "n_tokens": 1,
+    "pieces": [
+     "നമ്മൾ"
+    ],
+    "roundtrip": true
+   },
+   "ഇന്ത്യയിൽ": {
+    "n_tokens": 1,
+    "pieces": [
+     "ഇന്ത്യയിൽ"
+    ],
+    "roundtrip": true
+   },
+   "സ്ത്രീ": {
+    "n_tokens": 1,
+    "pieces": [
+     "സ്ത്രീ"
+    ],
+    "roundtrip": true
+   },
+   "ജ്ഞാനം": {
+    "n_tokens": 1,
+    "pieces": [
+     "ജ്ഞാനം"
+    ],
+    "roundtrip": true
+   },
+   "ക്ഷേത്രം": {
+    "n_tokens": 1,
+    "pieces": [
+     "ക്ഷേത്രം"
+    ],
+    "roundtrip": true
+   },
+   "ശ്രീകൃഷ്ണൻ": {
+    "n_tokens": 1,
+    "pieces": [
+     "ശ്രീകൃഷ്ണൻ"
+    ],
+    "roundtrip": true
+   },
+   "വിദ്യാഭ്യാസം": {
+    "n_tokens": 1,
+    "pieces": [
+     "വിദ്യാഭ്യാസം"
+    ],
+    "roundtrip": true
+   },
+   "സംസ്ഥാനം": {
+    "n_tokens": 1,
+    "pieces": [
+     "സംസ്ഥാനം"
+    ],
+    "roundtrip": true
+   },
+   "പ്രധാനമന്ത്രി": {
+    "n_tokens": 1,
+    "pieces": [
+     "പ്രധാനമന്ത്രി"
+    ],
+    "roundtrip": true
+   },
+   "വിമർശനം": {
+    "n_tokens": 1,
+    "pieces": [
+     "വിമർശനം"
+    ],
+    "roundtrip": true
+   },
+   "സങ്കടം": {
+    "n_tokens": 3,
+    "pieces": [
+     "സ",
+     "##ങ്കട",
+     "##ം"
+    ],
+    "roundtrip": true
+   },
+   "ദൃഷ്ടി": {
+    "n_tokens": 2,
+    "pieces": [
+     "ദ",
+     "##ൃഷ്ടി"
+    ],
+    "roundtrip": true
+   },
+   "ഋതു": {
+    "n_tokens": 2,
+    "pieces": [
+     "ഋ",
+     "##തു"
+    ],
+    "roundtrip": true
+   },
+   "ൠയം": {
+    "n_tokens": 1,
+    "pieces": [
+     "[UNK]"
+    ],
+    "roundtrip": false
+   },
+   "നമ്പർ": {
+    "n_tokens": 1,
+    "pieces": [
+     "നമ്പർ"
+    ],
+    "roundtrip": true
+   },
+   "അമ്മയ്‍": {
+    "n_tokens": 2,
+    "pieces": [
+     "അമ്മ",
+     "##യ്"
+    ],
+    "roundtrip": false
+   },
+   "കഴിഞ്ഞു": {
+    "n_tokens": 1,
+    "pieces": [
+     "കഴിഞ്ഞു"
+    ],
+    "roundtrip": true
+   },
+   "താഴെ": {
+    "n_tokens": 1,
+    "pieces": [
+     "താഴെ"
+    ],
+    "roundtrip": true
+   },
+   "മുകളിൽ": {
+    "n_tokens": 1,
+    "pieces": [
+     "മുകളിൽ"
+    ],
+    "roundtrip": true
+   }
+  }
+ },
+ "xlmr": {
+  "vocab_size": 250002,
+  "tokens_per_word": 2.7464433793454046,
+  "tokens_per_char": 0.2681794665963914,
+  "unk_rate": 2.2642184427384815e-06,
+  "roundtrip_exact_rate": 0.21155,
+  "zwj_paras": 15020,
+  "zwj_kept": 0,
+  "chillu": {
+   "കേരളം": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁കേരളം"
+    ],
+    "roundtrip": true
+   },
+   "നമ്മൾ": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁നമ്മൾ"
+    ],
+    "roundtrip": true
+   },
+   "ഇന്ത്യയിൽ": {
+    "n_tokens": 2,
+    "pieces": [
+     "▁ഇന്ത്യ",
+     "യിൽ"
+    ],
+    "roundtrip": true
+   },
+   "സ്ത്രീ": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁സ്ത്രീ"
+    ],
+    "roundtrip": true
+   },
+   "ജ്ഞാനം": {
+    "n_tokens": 3,
+    "pieces": [
+     "▁",
+     "ജ്ഞാന",
+     "ം"
+    ],
+    "roundtrip": true
+   },
+   "ക്ഷേത്രം": {
+    "n_tokens": 2,
+    "pieces": [
+     "▁ക്ഷേത്ര",
+     "ം"
+    ],
+    "roundtrip": true
+   },
+   "ശ്രീകൃഷ്ണൻ": {
+    "n_tokens": 3,
+    "pieces": [
+     "▁ശ്രീ",
+     "കൃഷ്ണ",
+     "ൻ"
+    ],
+    "roundtrip": true
+   },
+   "വിദ്യാഭ്യാസം": {
+    "n_tokens": 2,
+    "pieces": [
+     "▁വിദ്യാഭ്യാസ",
+     "ം"
+    ],
+    "roundtrip": true
+   },
+   "സംസ്ഥാനം": {
+    "n_tokens": 2,
+    "pieces": [
+     "▁സംസ്ഥാന",
+     "ം"
+    ],
+    "roundtrip": true
+   },
+   "പ്രധാനമന്ത്രി": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁പ്രധാനമന്ത്രി"
+    ],
+    "roundtrip": true
+   },
+   "വിമർശനം": {
+    "n_tokens": 2,
+    "pieces": [
+     "▁വിമർശ",
+     "നം"
+    ],
+    "roundtrip": true
+   },
+   "സങ്കടം": {
+    "n_tokens": 2,
+    "pieces": [
+     "▁സങ്കട",
+     "ം"
+    ],
+    "roundtrip": true
+   },
+   "ദൃഷ്ടി": {
+    "n_tokens": 4,
+    "pieces": [
+     "▁ദ",
+     "ൃ",
+     "ഷ്",
+     "ടി"
+    ],
+    "roundtrip": true
+   },
+   "ഋതു": {
+    "n_tokens": 3,
+    "pieces": [
+     "▁",
+     "ഋ",
+     "തു"
+    ],
+    "roundtrip": true
+   },
+   "ൠയം": {
+    "n_tokens": 3,
+    "pieces": [
+     "▁",
+     "<unk>",
+     "യം"
+    ],
+    "roundtrip": false
+   },
+   "നമ്പർ": {
+    "n_tokens": 3,
+    "pieces": [
+     "▁ന",
+     "മ്പ",
+     "ർ"
+    ],
+    "roundtrip": true
+   },
+   "അമ്മയ്‍": {
+    "n_tokens": 2,
+    "pieces": [
+     "▁അമ്മ",
+     "യ്"
+    ],
+    "roundtrip": false
+   },
+   "കഴിഞ്ഞു": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁കഴിഞ്ഞു"
+    ],
+    "roundtrip": true
+   },
+   "താഴെ": {
+    "n_tokens": 1,
+    "pieces": [
+     "▁താഴെ"
+    ],
+    "roundtrip": true
+   },
+   "മുകളിൽ": {
+    "n_tokens": 2,
+    "pieces": [
+     "▁മ",
+     "ുകളിൽ"
+    ],
+    "roundtrip": true
+   }
+  }
+ },
+ "indicbertv2": {
+  "vocab_size": 250000,
+  "tokens_per_word": 1.9379917510964078,
+  "tokens_per_char": 0.1892373234365076,
+  "unk_rate": 8.0218965688744e-07,
+  "roundtrip_exact_rate": 0.0003,
+  "zwj_paras": 15020,
+  "zwj_kept": 5,
+  "chillu": {
+   "കേരളം": {
+    "n_tokens": 1,
+    "pieces": [
+     "കേരളം"
+    ],
+    "roundtrip": true
+   },
+   "നമ്മൾ": {
+    "n_tokens": 1,
+    "pieces": [
+     "നമ്മൾ"
+    ],
+    "roundtrip": true
+   },
+   "ഇന്ത്യയിൽ": {
+    "n_tokens": 1,
+    "pieces": [
+     "ഇന്ത്യയിൽ"
+    ],
+    "roundtrip": true
+   },
+   "സ്ത്രീ": {
+    "n_tokens": 1,
+    "pieces": [
+     "സ്ത്രീ"
+    ],
+    "roundtrip": true
+   },
+   "ജ്ഞാനം": {
+    "n_tokens": 1,
+    "pieces": [
+     "ജ്ഞാനം"
+    ],
+    "roundtrip": true
+   },
+   "ക്ഷേത്രം": {
+    "n_tokens": 1,
+    "pieces": [
+     "ക്ഷേത്രം"
+    ],
+    "roundtrip": true
+   },
+   "ശ്രീകൃഷ്ണൻ": {
+    "n_tokens": 2,
+    "pieces": [
+     "ശ്രീകൃഷ്ണ",
+     "##ൻ"
+    ],
+    "roundtrip": false
+   },
+   "വിദ്യാഭ്യാസം": {
+    "n_tokens": 1,
+    "pieces": [
+     "വിദ്യാഭ്യാസം"
+    ],
+    "roundtrip": true
+   },
+   "സംസ്ഥാനം": {
+    "n_tokens": 1,
+    "pieces": [
+     "സംസ്ഥാനം"
+    ],
+    "roundtrip": true
+   },
+   "പ്രധാനമന്ത്രി": {
+    "n_tokens": 1,
+    "pieces": [
+     "പ്രധാനമന്ത്രി"
+    ],
+    "roundtrip": true
+   },
+   "വിമർശനം": {
+    "n_tokens": 1,
+    "pieces": [
+     "വിമർശനം"
+    ],
+    "roundtrip": true
+   },
+   "സങ്കടം": {
+    "n_tokens": 2,
+    "pieces": [
+     "സങ്കട",
+     "##ം"
+    ],
+    "roundtrip": false
+   },
+   "ദൃഷ്ടി": {
+    "n_tokens": 2,
+    "pieces": [
+     "ദൃഷ്ട",
+     "##ി"
+    ],
+    "roundtrip": false
+   },
+   "ഋതു": {
+    "n_tokens": 2,
+    "pieces": [
+     "ഋ",
+     "##തു"
+    ],
+    "roundtrip": false
+   },
+   "ൠയം": {
+    "n_tokens": 2,
+    "pieces": [
+     "ൠ",
+     "##യം"
+    ],
+    "roundtrip": false
+   },
+   "നമ്പർ": {
+    "n_tokens": 1,
+    "pieces": [
+     "നമ്പർ"
+    ],
+    "roundtrip": true
+   },
+   "അമ്മയ്‍": {
+    "n_tokens": 3,
+    "pieces": [
+     "അമ്മ",
+     "##യ്",
+     "##‍"
+    ],
+    "roundtrip": false
+   },
+   "കഴിഞ്ഞു": {
+    "n_tokens": 1,
+    "pieces": [
+     "കഴിഞ്ഞു"
+    ],
+    "roundtrip": true
+   },
+   "താഴെ": {
+    "n_tokens": 1,
+    "pieces": [
+     "താഴെ"
+    ],
+    "roundtrip": true
+   },
+   "മുകളിൽ": {
+    "n_tokens": 1,
+    "pieces": [
+     "മുകളിൽ"
+    ],
+    "roundtrip": true
+   }
+  }
+ },
+ "gpt2": {
+  "vocab_size": 50257,
+  "tokens_per_word": 27.893826070328664,
+  "tokens_per_char": 2.7237231443148104,
+  "unk_rate": 0.0,
+  "roundtrip_exact_rate": 1.0,
+  "zwj_paras": 15020,
+  "zwj_kept": 15020,
+  "chillu": {
+   "കേരളം": {
+    "n_tokens": 15,
+    "pieces": [
+     "à",
+     "´",
+     "ķ",
+     "à",
+     "µ",
+     "ĩ",
+     "à",
+     "´",
+     "°",
+     "à",
+     "´",
+     "³"
+    ],
+    "roundtrip": true
+   },
+   "നമ്മൾ": {
+    "n_tokens": 15,
+    "pieces": [
+     "à",
+     "´",
+     "¨",
+     "à",
+     "´",
+     "®",
+     "à",
+     "µ",
+     "į",
+     "à",
+     "´",
+     "®"
+    ],
+    "roundtrip": true
+   },
+   "ഇന്ത്യയിൽ": {
+    "n_tokens": 27,
+    "pieces": [
+     "à",
+     "´",
+     "ĩ",
+     "à",
+     "´",
+     "¨",
+     "à",
+     "µ",
+     "į",
+     "à",
+     "´",
+     "¤"
+    ],
+    "roundtrip": true
+   },
+   "സ്ത്രീ": {
+    "n_tokens": 18,
+    "pieces": [
+     "à",
+     "´",
+     "¸",
+     "à",
+     "µ",
+     "į",
+     "à",
+     "´",
+     "¤",
+     "à",
+     "µ",
+     "į"
+    ],
+    "roundtrip": true
+   },
+   "ജ്ഞാനം": {
+    "n_tokens": 18,
+    "pieces": [
+     "à",
+     "´",
+     "ľ",
+     "à",
+     "µ",
+     "į",
+     "à",
+     "´",
+     "ŀ",
+     "à",
+     "´",
+     "¾"
+    ],
+    "roundtrip": true
+   },
+   "ക്ഷേത്രം": {
+    "n_tokens": 24,
+    "pieces": [
+     "à",
+     "´",
+     "ķ",
+     "à",
+     "µ",
+     "į",
+     "à",
+     "´",
+     "·",
+     "à",
+     "µ",
+     "ĩ"
+    ],
+    "roundtrip": true
+   },
+   "ശ്രീകൃഷ്ണൻ": {
+    "n_tokens": 30,
+    "pieces": [
+     "à",
+     "´",
+     "¶",
+     "à",
+     "µ",
+     "į",
+     "à",
+     "´",
+     "°",
+     "à",
+     "µ",
+     "Ģ"
+    ],
+    "roundtrip": true
+   },
+   "വിദ്യാഭ്യാസം": {
+    "n_tokens": 36,
+    "pieces": [
+     "à",
+     "´",
+     "µ",
+     "à",
+     "´",
+     "¿",
+     "à",
+     "´",
+     "¦",
+     "à",
+     "µ",
+     "į"
+    ],
+    "roundtrip": true
+   },
+   "സംസ്ഥാനം": {
+    "n_tokens": 24,
+    "pieces": [
+     "à",
+     "´",
+     "¸",
+     "à",
+     "´",
+     "Ĥ",
+     "à",
+     "´",
+     "¸",
+     "à",
+     "µ",
+     "į"
+    ],
+    "roundtrip": true
+   },
+   "പ്രധാനമന്ത്രി": {
+    "n_tokens": 39,
+    "pieces": [
+     "à",
+     "´",
+     "ª",
+     "à",
+     "µ",
+     "į",
+     "à",
+     "´",
+     "°",
+     "à",
+     "´",
+     "§"
+    ],
+    "roundtrip": true
+   },
+   "വിമർശനം": {
+    "n_tokens": 21,
+    "pieces": [
+     "à",
+     "´",
+     "µ",
+     "à",
+     "´",
+     "¿",
+     "à",
+     "´",
+     "®",
+     "à",
+     "µ",
+     "¼"
+    ],
+    "roundtrip": true
+   },
+   "സങ്കടം": {
+    "n_tokens": 18,
+    "pieces": [
+     "à",
+     "´",
+     "¸",
+     "à",
+     "´",
+     "Ļ",
+     "à",
+     "µ",
+     "į",
+     "à",
+     "´",
+     "ķ"
+    ],
+    "roundtrip": true
+   },
+   "ദൃഷ്ടി": {
+    "n_tokens": 18,
+    "pieces": [
+     "à",
+     "´",
+     "¦",
+     "à",
+     "µ",
+     "ĥ",
+     "à",
+     "´",
+     "·",
+     "à",
+     "µ",
+     "į"
+    ],
+    "roundtrip": true
+   },
+   "ഋതു": {
+    "n_tokens": 9,
+    "pieces": [
+     "à",
+     "´",
+     "ĭ",
+     "à",
+     "´",
+     "¤",
+     "à",
+     "µ",
+     "ģ"
+    ],
+    "roundtrip": true
+   },
+   "ൠയം": {
+    "n_tokens": 9,
+    "pieces": [
+     "à",
+     "µ",
+     "ł",
+     "à",
+     "´",
+     "¯",
+     "à",
+     "´",
+     "Ĥ"
+    ],
+    "roundtrip": true
+   },
+   "നമ്പർ": {
+    "n_tokens": 15,
+    "pieces": [
+     "à",
+     "´",
+     "¨",
+     "à",
+     "´",
+     "®",
+     "à",
+     "µ",
+     "į",
+     "à",
+     "´",
+     "ª"
+    ],
+    "roundtrip": true
+   },
+   "അമ്മയ്‍": {
+    "n_tokens": 20,
+    "pieces": [
+     "à",
+     "´",
+     "ħ",
+     "à",
+     "´",
+     "®",
+     "à",
+     "µ",
+     "į",
+     "à",
+     "´",
+     "®"
+    ],
+    "roundtrip": true
+   },
+   "കഴിഞ്ഞു": {
+    "n_tokens": 21,
+    "pieces": [
+     "à",
+     "´",
+     "ķ",
+     "à",
+     "´",
+     "´",
+     "à",
+     "´",
+     "¿",
+     "à",
+     "´",
+     "ŀ"
+    ],
+    "roundtrip": true
+   },
+   "താഴെ": {
+    "n_tokens": 12,
+    "pieces": [
+     "à",
+     "´",
+     "¤",
+     "à",
+     "´",
+     "¾",
+     "à",
+     "´",
+     "´",
+     "à",
+     "µ",
+     "Ĩ"
+    ],
+    "roundtrip": true
+   },
+   "മുകളിൽ": {
+    "n_tokens": 18,
+    "pieces": [
+     "à",
+     "´",
+     "®",
+     "à",
+     "µ",
+     "ģ",
+     "à",
+     "´",
+     "ķ",
+     "à",
+     "´",
+     "³"
+    ],
+    "roundtrip": true
+   }
+  }
+ }
+}
