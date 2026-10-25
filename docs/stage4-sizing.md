@@ -5,6 +5,15 @@ Status: framework decided; the sizing table gets its final numbers from
 "measured" is final; "estimate" items are resolved by the first 100 cloud
 steps before a full run commits (per Stage 8 compute rules).
 
+> **Stage 2 measured gate (2026-10-25):** the current bins contain
+> **316,794,142 unique tokens** (310.5M train) — a test-scale re-bootstrap,
+> not the full corpus. That is **2.88 tokens/param** for the 110M base, below
+> the 1B-token threshold in §1, so the "smaller model + single epoch"
+> fallback applies to any run on these bins. The 110M primary path remains
+> valid only after the full ~1.7B-token corpus is rebuilt with the now-proven
+> pipeline (see `docs/data_report.md`). The architecture decision itself is
+> unchanged.
+
 ## 1. Data-bound sizing (tokens-per-parameter)
 
 Applied heuristic: ~20 tokens/param (Chinchilla-style reference, not gospel).
@@ -52,9 +61,13 @@ it. On-demand only if measured interruption frequency makes > 2 restarts/hour.
 
 1. Local (4060): `--preset tiny --overfit-batch` sanity (mandatory gates).
 2. Local: `--preset small` 2k steps on real bins — validates loop + data E2E.
+   Can run on the current 310.5M-token train bin (≈65.5M tokens at default
+   batch/grad-accum/512-ctx, ~0.21 epoch); this validates the loop but does
+   not satisfy the data-volume condition for the final run.
 3. Cloud (g5.xlarge, Spot, 100 steps): measure actual tok/s and cost/hr;
    if measured cost extrapolates > 2x estimate, re-decide instance before the
-   full run. (This replaces assumption with measurement per the spec.)
+   full run. **Blocked until the full-corpus bins exist**; do not launch the
+   1.7B-token plan against the 316.8M-token test bins.
 4. Full run: `aws/launch_train_spot.sh` — syncs bins from S3 to NVMe first,
    trains resumably, syncs checkpoints on interval.
 

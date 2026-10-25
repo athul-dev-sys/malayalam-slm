@@ -29,13 +29,14 @@ def load_docs(path, n_docs):
     docs, buf = [], []
     with io.open(path, "r", encoding="utf-8") as f:
         for line in f:
-            s = line.strip()
-            if s == "\x1e":
+            raw = line.rstrip("\r\n")
+            # \x1e is Unicode whitespace, so strip() would erase the marker before comparison
+            if raw == "\x1e":
                 if buf:
                     docs.append("\n\n".join(buf))
                     buf = []
-            elif s:
-                buf.append(s)
+            elif raw.strip():
+                buf.append(raw.strip())
     if buf:
         docs.append("\n\n".join(buf))
     return docs[:n_docs]

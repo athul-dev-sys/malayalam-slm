@@ -12,7 +12,7 @@ This project was built through a structured 8-stage methodology. The repository 
 |---|---|---|---|
 | **Stage 0** | Target & Scope Definition | ✅ Completed | [docs/stage0-target.md](docs/stage0-target.md) — 110M params, base model + dialect target. |
 | **Stage 1** | Tokenizer Suite | ✅ Completed | [artifacts/tokenizer/malayalam_spm.model](artifacts/tokenizer/malayalam_spm.model) — 50k Unigram, 1.77 tok/word, 0 UNKs. |
-| **Stage 2** | Data Pipeline | 🔄 Text Cleaned | Scripts built; cleaned corpora: Wiki (452MB), CC100 (5.5GB), IndicCorp (23.2GB). **Pending: tokenizing to `.bin`**. |
+| **Stage 2** | Data Pipeline | ✅ Completed (test-scale) | [docs/data_report.md](docs/data_report.md) — clean, dedup, 98/1/1 split, uint16 bins: **316.8M tokens** (train 310.5M / val 3.15M / test 3.18M), 0 UNK. Rebuilt from bounded public-source slices; full ~1.7B-token corpus still required before the final pretraining run. |
 | **Stage 3** | Transformer Model | ✅ Completed | [src/model.py](src/model.py), [scripts/train.py](scripts/train.py) — Passed $\ln(\text{vocab})$ & overfit sanity gates. |
 | **Stage 4** | Sizing & Pretraining Plan | ✅ Completed | [docs/stage4-sizing.md](docs/stage4-sizing.md) — 110M params, 1024 context, Spot `g5.xlarge` plan (~$2.50). |
 | **Stage 5** | Evaluation Framework | ✅ Completed | [scripts/eval_model.py](scripts/eval_model.py) — Cross-tokenizer bits-per-character (BPC) & perplexity. |
@@ -37,14 +37,25 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 2. Immediate Next Step: Tokenize Cleaned Corpora (Stage 2 completion)
-If you have the cleaned text files (`wiki.txt.gz`, `cc100.txt.gz`, `indiccorp.txt`) placed under `data/clean/`:
+### 2. Data Pipeline (Stage 2 completed on this machine)
+Stage 2 has been run end-to-end. The current `data/tokenized/` contains
+**316,794,142 tokens** (train 310.46M / val 3.15M / test 3.18M) as uint16
+memmaps, plus `test.txt` and `stats.json`, produced by a global cross-source
+dedup and a doc-level 98/1/1 split (seed 1337). Exact source ranges, cleaning
+stats and validation evidence are in [docs/data_report.md](docs/data_report.md).
+
+`data/` is gitignored; the artifacts live on the execution machine. To rebuild
+them from scratch, follow the reproduction commands in the data report
+(`scripts/extract_wiki.py`, `scripts/build_corpus.py`, then):
 ```bash
 python scripts/split_tokenize.py artifacts/tokenizer/malayalam_spm.model
 ```
-This performs a global cross-source deduplication, document-level 98/1/1 train/val/test split, and outputs `uint16` binary token memory maps (`train.bin`, `val.bin`, `stats.json`) into `data/tokenized/`.
 
-*(Note: If setting up from scratch on a new machine without pre-downloaded data, run `scripts/build_corpus.py` to stream and clean the raw sources as documented in `docs/stage2-data-assessment.md`).*
+**Scale caveat:** the current run used bounded public-source slices (full wiki,
+a 2M-line CC100 prefix, and the first 4 GiB of IndicCorpV2) because the
+original corpora were absent and this machine has 8 GB RAM. That is enough to
+validate the pipeline and run the local Stage 4 gate, but the full ~1.7B-token
+corpus must be rebuilt before the final cloud pretraining run.
 
 ### 3. Local Small Validation Run (Stage 4 gate)
 Before spending cloud budget, validate the end-to-end training loop on the tokenized data for 2,000 steps locally:
@@ -53,6 +64,11 @@ python scripts/train.py --preset small --steps 2000 --data-dir data/tokenized --
 ```
 
 ### 4. Full Cloud Pretraining (Stage 8)
+> The current Stage 2 bins are test-scale (310M train tokens, 2.9 tokens/param
+> at 110M params). Rebuild the full ~1.7B-token corpus (same pipeline, no
+> slice bounds) before committing the full pretraining budget. The local
+> 2,000-step gate below can run on the current bins.
+
 1. Create your private S3 bucket and attach the IAM role described in [aws/README.md](aws/README.md).
 2. Sync `data/tokenized/` and `artifacts/tokenizer/` to `s3://<YOUR-BUCKET>/tokenized/`.
 3. Launch an EC2 Spot `g5.xlarge` instance using [aws/launch_train_spot.sh](aws/launch_train_spot.sh) (~6 hours, ~$2.50 total).
@@ -79,6 +95,7 @@ bash scripts/run_ablation.sh checkpoints/base_model/best.pt
 │   ├── launch_train_spot.sh           # Spot launch template
 │   └── userdata_train.sh              # Cloud-init provisioning script
 ├── docs/                              # Formal methodology & decision assessments
+│   ├── data_report.md                 # Stage 2 measured results & provenance
 │   ├── sanity-logs.md
 │   ├── stage0-target.md
 │   ├── stage1-tokenizer-assessment.md

@@ -1,138 +1,277 @@
 """Stage 2 final phase: global re-dedup across sources, doc-level shuffle, 98/1/1 split,
 tokenization to uint16 memmaps. Also saves raw test text for baseline evals.
 
+Streams the cleaned corpus twice so peak RAM is O(unique paragraphs + n_docs) rather
+than O(corpus). Pass 1 globally dedups paragraphs and writes the surviving documents
+to a length-prefixed temp file. Pass 2 assigns the shuffled split labels and tokenizes
+in batches, appending directly to the three uint16 bins.
+
+Files without explicit \\x1e document separators are treated as one paragraph per
+document (IndicCorpV2 has no doc metadata; the original implementation wrongly held
+the whole file as a single document).
+
 Usage: PYTHONIOENCODING=utf-8 python scripts/split_tokenize.py <tokenizer.model>
 """
+import gzip
 import hashlib
 import io
 import json
 import os
-import random
+import re
+import struct
 import sys
 import time
 
+import numpy as np
 import sentencepiece as spm
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CLEAN = os.path.join(ROOT, "data", "clean")
 OUT = os.path.join(ROOT, "data", "tokenized")
+WORK = os.path.join(ROOT, "data", "work")
 DOC_SEP = "\x1e"
+WS_RE = re.compile(r"[ \t]{2,}")
+NON_ML_RE = re.compile(r"[^\u0d00-\u0d7f]")
+SPLIT_NAMES = ("train", "val", "test")
+TEST_SPLIT = 2
+SPLIT_SEED = 1337
+ENCODE_BATCH_CHARS = 2_000_000
+ENCODE_BATCH_DOCS = 1024
 
 
 def norm_key(s):
-    key = "".join(ch for ch in s if "\u0d00" <= ch <= "\u0d7f")
+    # identical semantics to the original per-character join, but C-speed
+    key = NON_ML_RE.sub("", s)
     return hashlib.blake2b(key.encode("utf-8"), digest_size=8).digest()
 
 
-def iter_docs(path):
-    """Yield docs as lists of paragraph strings; \x1e marks boundary, else 1-para docs."""
-    import gzip
+def _open_text(path):
+    return gzip.open(path, "rt", encoding="utf-8", errors="replace") if path.endswith(".gz") else io.open(
+        path, "rt", encoding="utf-8", errors="replace"
+    )
 
-    op = gzip.open if path.endswith(".gz") else io.open
+
+def source_has_doc_sep(path, sample_chars=4_000_000):
+    with _open_text(path) as f:
+        return DOC_SEP in f.read(sample_chars)
+
+
+def iter_docs(path, para_docs):
+    """Yield documents as lists of paragraph strings.
+
+    para_docs=True: every blank-line paragraph block is its own document.
+    para_docs=False: paragraphs accumulate until an explicit \\x1e boundary.
+    """
     paras = []
-    with op(path, "rt", encoding="utf-8") as f:
+    buf = []
+
+    def flush_para():
+        if buf:
+            paras.append(" ".join(buf))
+            buf.clear()
+
+    with _open_text(path) as f:
         for line in f:
-            if line.strip() == DOC_SEP:
+            # \x1e is Unicode whitespace, so strip() would erase the marker before comparison
+            raw = line.rstrip("\r\n")
+            if raw == DOC_SEP:
+                flush_para()
                 if paras:
                     yield paras
                     paras = []
-            elif line.strip():
-                paras.append(line.strip())
+                continue
+            s = raw.strip()
+            if not s:
+                flush_para()
+                if para_docs and paras:
+                    yield paras
+                    paras = []
+            else:
+                buf.append(s)
+    flush_para()
     if paras:
         yield paras
 
 
+def reduce_sources(sources, tmp_docs):
+    """Pass 1: global paragraph dedup, write surviving docs to temp file. Returns (n_docs, stats)."""
+    seen = set()
+    n_docs = 0
+    stats = {"per_source": {}, "global_dup_cross_source": 0, "documents_total": 0, "chars_total": 0}
+
+    with io.open(tmp_docs, "wb") as out:
+        for fname in sources:
+            path = os.path.join(CLEAN, fname)
+            name = fname[:-4] if fname.endswith(".txt") else fname[:-7]
+            para_docs = not source_has_doc_sep(path)
+            src = {
+                "docs": 0, "paras": 0, "paras_kept": 0, "cross_dup": 0,
+                "chars": 0, "doc_boundaries": "paragraph" if para_docs else "separator",
+            }
+            for paras in iter_docs(path, para_docs):
+                kept = []
+                for p in paras:
+                    src["paras"] += 1
+                    k = norm_key(p)
+                    if k in seen:
+                        src["cross_dup"] += 1
+                        continue
+                    seen.add(k)
+                    kept.append(p)
+                if not kept:
+                    continue
+                text = "\n\n".join(WS_RE.sub(" ", p) for p in kept)
+                raw = text.encode("utf-8")
+                out.write(struct.pack("<I", len(raw)))
+                out.write(raw)
+                n_docs += 1
+                src["docs"] += 1
+                src["paras_kept"] += len(kept)
+                src["chars"] += len(text)
+            stats["per_source"][name] = src
+            stats["global_dup_cross_source"] += src["cross_dup"]
+            print(f"{name}: docs={src['docs']} paras_kept={src['paras_kept']} "
+                  f"cross-dup={src['cross_dup']} mode={src['doc_boundaries']}", flush=True)
+
+    stats["documents_total"] = n_docs
+    stats["chars_total"] = sum(s["chars"] for s in stats["per_source"].values())
+    return n_docs, stats
+
+
+def make_split_labels(n_docs):
+    """Doc-level shuffle + 98/1/1 slice, matching the original max(1000, 1%) rule."""
+    if n_docs < 3:
+        raise SystemExit(f"need at least 3 documents for a train/val/test split, got {n_docs}")
+    n_test = max(1000, n_docs // 100)
+    n_val = max(1000, n_docs // 100)
+    if n_test + n_val >= n_docs:
+        # tiny-corpus fallback; the Stage 2 corpus is far above this threshold
+        n_test = max(1, n_docs // 100)
+        n_val = max(1, n_docs // 100)
+    if n_test + n_val >= n_docs:
+        raise SystemExit(f"too few documents for three non-empty splits: {n_docs}")
+    rng = np.random.default_rng(SPLIT_SEED)
+    perm = rng.permutation(n_docs)
+    labels = np.zeros(n_docs, dtype=np.uint8)
+    labels[perm[:n_test]] = 2
+    labels[perm[n_test:n_test + n_val]] = 1
+    return labels, n_test, n_val
+
+
+def tokenize_split(sp, tmp_docs, labels, n_docs, stats):
+    """Pass 2: tokenize to uint16 bins in bounded batches; test text saved verbatim."""
+    tmp_bins = {sid: os.path.join(OUT, name + ".bin.tmp") for sid, name in enumerate(SPLIT_NAMES)}
+    tmp_test_txt = os.path.join(OUT, "test.txt.tmp")
+    fh = {sid: io.open(path, "wb") for sid, path in tmp_bins.items()}
+    test_out = io.open(tmp_test_txt, "w", encoding="utf-8", newline="\n")
+    per_split = {
+        name: {"tokens": 0, "chars": 0, "docs": 0} for name in SPLIT_NAMES
+    }
+    batch = []
+    batch_chars = 0
+    idx = 0
+    vocab_size = sp.get_piece_size()
+    if vocab_size > 65536:
+        raise SystemExit(f"vocab {vocab_size} does not fit uint16 bins")
+
+    def flush():
+        nonlocal batch, batch_chars
+        if not batch:
+            return
+        encs = sp.encode([t for _, t in batch], out_type=int, add_bos=True, add_eos=True)
+        grouped = {0: [], 1: [], 2: []}
+        for (sid, text), enc in zip(batch, encs):
+            arr = np.asarray(enc, dtype=np.uint16)
+            if arr.size and int(arr.max()) >= vocab_size:
+                raise SystemExit("token id out of vocabulary range")
+            grouped[sid].append(arr)
+            meta = per_split[SPLIT_NAMES[sid]]
+            meta["tokens"] += len(arr)
+            meta["chars"] += len(text)
+            meta["docs"] += 1
+            if sid == TEST_SPLIT:
+                test_out.write(text + "\n\n" + DOC_SEP + "\n\n")
+        for sid, arrays in grouped.items():
+            if arrays:
+                np.concatenate(arrays).tofile(fh[sid])
+        batch = []
+        batch_chars = 0
+
+    with io.open(tmp_docs, "rb") as f:
+        while True:
+            hdr = f.read(4)
+            if not hdr:
+                break
+            if len(hdr) != 4:
+                raise SystemExit("truncated document record header")
+            (n_bytes,) = struct.unpack("<I", hdr)
+            raw = f.read(n_bytes)
+            if len(raw) != n_bytes:
+                raise SystemExit("truncated document record body")
+            text = raw.decode("utf-8")
+            batch.append((int(labels[idx]), text))
+            batch_chars += len(text)
+            idx += 1
+            if batch_chars >= ENCODE_BATCH_CHARS or len(batch) >= ENCODE_BATCH_DOCS:
+                flush()
+                print(f"tokenized {idx:,}/{n_docs:,} docs", flush=True)
+        flush()
+
+    if idx != n_docs:
+        raise SystemExit(f"document count mismatch: read {idx}, expected {n_docs}")
+    for handle in fh.values():
+        handle.close()
+    test_out.close()
+
+    for sid, name in enumerate(SPLIT_NAMES):
+        final = os.path.join(OUT, name + ".bin")
+        os.replace(tmp_bins[sid], final)
+        per_split[name]["bin_mb"] = os.path.getsize(final) / 1e6
+        per_split[name]["tokens_per_char"] = (
+            per_split[name]["tokens"] / per_split[name]["chars"] if per_split[name]["chars"] else 0.0
+        )
+    os.replace(tmp_test_txt, os.path.join(OUT, "test.txt"))
+    stats["split"] = per_split
+
+
 def main():
-    tok_path = sys.argv[1]
+    tok_path = sys.argv[1] if len(sys.argv) > 1 else os.path.join(
+        ROOT, "artifacts", "tokenizer", "malayalam_spm.model"
+    )
     sp = spm.SentencePieceProcessor(model_file=tok_path)
     os.makedirs(OUT, exist_ok=True)
-
+    os.makedirs(WORK, exist_ok=True)
     t0 = time.time()
-    sources = sorted(
-        f for f in os.listdir(CLEAN) if f.endswith((".txt", ".txt.gz"))
-    )
-    print("sources:", sources)
 
-    # ---- collect + global re-dedup ----
-    seen = set()
-    docs = []  # (source, [paras])
-    stats = {"per_source": {}, "global_dup_cross_source": 0}
-    for fname in sources:
-        name = fname[:-4] if fname.endswith(".txt") else fname[:-7]
-        n_docs = n_paras = n_dup = 0
-        for paras in iter_docs(os.path.join(CLEAN, fname)):
-            kept = []
-            for p in paras:
-                k = norm_key(p)
-                if k in seen:
-                    n_dup += 1
-                    continue
-                seen.add(k)
-                kept.append(p)
-            if kept:
-                docs.append((name, kept))
-                n_docs += 1
-                n_paras += len(kept)
-        stats["per_source"][name] = {"docs": n_docs, "paras": n_paras, "cross_dup": n_dup}
-        stats["global_dup_cross_source"] += n_dup
-        print(f"{name}: docs={n_docs} paras={n_paras} cross-dup={n_dup}")
+    sources = sorted(f for f in os.listdir(CLEAN) if f.endswith((".txt", ".txt.gz")))
+    if not sources:
+        raise SystemExit(f"no cleaned corpus files in {CLEAN}")
+    print("sources:", sources, flush=True)
 
-    # ---- shuffle + split ----
-    random.Random(1337).shuffle(docs)
-    n = len(docs)
-    n_test = max(1000, n // 100)
-    n_val = max(1000, n // 100)
-    test_docs = docs[:n_test]
-    val_docs = docs[n_test : n_test + n_val]
-    train_docs = docs[n_test + n_val :]
-    print(f"split: train={len(train_docs)} val={len(val_docs)} test={len(test_docs)} docs")
+    tmp_docs = os.path.join(WORK, "stage2_docs.tmp")
+    n_docs, stats = reduce_sources(sources, tmp_docs)
+    print(f"global dedup: {n_docs:,} docs, {stats['chars_total']:,} chars", flush=True)
 
-    # ---- tokenize each split ----
-    import re
+    labels, n_test, n_val = make_split_labels(n_docs)
+    print(f"split: train={n_docs - n_test - n_val:,} val={n_val:,} test={n_test:,} docs", flush=True)
+    tokenize_split(sp, tmp_docs, labels, n_docs, stats)
 
-    ws = re.compile(r"[ \t]{2,}")
-
-    def doc_text(paras):
-        return "\n\n".join(ws.sub(" ", p) for p in paras)
-
-    def encode_split(split_docs, out_name, also_text=False):
-        ids_all = []
-        n_chars = 0
-        text_out = io.open(os.path.join(OUT, out_name + ".txt"), "w", encoding="utf-8") if also_text else None
-        texts = [doc_text(paras) for _, paras in split_docs]
-        encs = sp.encode(texts, out_type=int, add_bos=True, add_eos=True)
-        for t, enc in zip(texts, encs):
-            ids_all.extend(enc)
-            n_chars += len(t)
-            if text_out:
-                text_out.write(t + "\n\n" + DOC_SEP + "\n\n")
-        if text_out:
-            text_out.close()
-        arr_path = os.path.join(OUT, out_name + ".bin")
-        import numpy as np
-
-        arr = np.array(ids_all, dtype=np.uint16)
-        arr.tofile(arr_path)
-        return {
-            "tokens": len(arr), "chars": n_chars,
-            "tokens_per_char": len(arr) / max(n_chars, 1),
-            "bin_mb": os.path.getsize(arr_path) / 1e6,
-        }
-
-    res = {}
-    res["train"] = encode_split(train_docs, "train")
-    res["val"] = encode_split(val_docs, "val")
-    res["test"] = encode_split(test_docs, "test", also_text=True)  # raw text for baseline evals
-    res["total_tokens"] = res["train"]["tokens"] + res["val"]["tokens"] + res["test"]["tokens"]
-    stats["split"] = res
+    stats["total_tokens"] = sum(s["tokens"] for s in stats["split"].values())
     stats["tokenizer"] = tok_path
     stats["vocab_size"] = sp.get_piece_size()
+    stats["split_seed"] = SPLIT_SEED
+    stats["split_method"] = "numpy_pcg64_permutation (doc-level shuffle then 98/1/1 slice)"
     stats["elapsed_min"] = round((time.time() - t0) / 60, 1)
 
-    with io.open(os.path.join(OUT, "stats.json"), "w", encoding="utf-8") as f:
+    stats_path = os.path.join(OUT, "stats.json")
+    tmp_stats = stats_path + ".tmp"
+    with io.open(tmp_stats, "w", encoding="utf-8") as f:
         json.dump(stats, f, indent=1, ensure_ascii=False)
+    os.replace(tmp_stats, stats_path)
+
+    os.remove(tmp_docs)
     print(json.dumps(stats["split"], indent=1))
-    print(f"TOTAL TOKENS: {res['total_tokens']:,}")
+    print(f"TOTAL TOKENS: {stats['total_tokens']:,}")
     print(f"elapsed {stats['elapsed_min']} min")
 
 
