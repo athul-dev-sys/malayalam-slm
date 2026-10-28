@@ -29,3 +29,6 @@ data/*.bz2
 Thumbs.db
 .vscode/
 .idea/
+
+# Logs
+*.log

@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="ml">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>മലയാളം SLM · Local Demo</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-mark">മ</div>
+    <div>
+      <h1>മലയാളം SLM</h1>
+      <p>Native Malayalam language model · local demo</p>
+    </div>
+  </div>
+  <div class="status-pill" id="statusPill">
+    <span class="dot" id="statusDot"></span>
+    <span id="statusText">connecting…</span>
+  </div>
+</header>
+
+<nav class="tabs" id="tabs">
+  <button class="tab active" data-tab="tokenizer">Tokenizer</button>
+  <button class="tab" data-tab="generate">Generate</button>
+  <button class="tab" data-tab="data">Training &amp; Data</button>
+</nav>
+
+<main>
+  <!-- ============ TOKENIZER ============ -->
+  <section class="tab-panel active" id="tab-tokenizer">
+    <div class="hero">
+      <h2>Malayalam tokenization, measured live</h2>
+      <p>One 50k SentencePiece Unigram model, trained from scratch on cleaned Malayalam.
+        Compare it against MuRIL, XLM-R and IndicBERTv2 on any text you paste.</p>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head">
+        <h3>Malayalam text</h3>
+        <div class="actions">
+          <button class="ghost" id="sampleBtn" type="button">Random corpus sample</button>
+          <span class="hint" id="charCount">0 chars</span>
+        </div>
+      </div>
+      <textarea id="tokInput" maxlength="3000" spellcheck="false"></textarea>
+      <div class="actions">
+        <button class="primary" id="tokBtn" type="button">Analyze tokenization</button>
+        <span class="hint">Runs 4 tokenizers live · no baseline model weights are loaded</span>
+      </div>
+    </div>
+
+    <div id="tokLoading" class="loading hidden">Tokenizing…</div>
+    <div id="tokError" class="error hidden"></div>
+
+    <div id="tokResults" class="hidden">
+      <div class="metrics" id="ourMetrics"></div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h3>Our tokenizer · how it splits</h3>
+          <span class="badge teal">50k Unigram · byte fallback both ways</span>
+        </div>
+        <div class="chips" id="tokenChips"></div>
+        <p class="hint" id="tokenNote"></p>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h3>Fertility vs existing tokenizers</h3>
+          <span class="hint">content tokens per whitespace word · lower is better</span>
+        </div>
+        <div id="cmpBars" class="cmp"></div>
+        <p class="hint">Baselines are tokenizer artifacts only (MuRIL: WordPiece 197k,
+          XLM-R: SentencePiece 250k, IndicBERTv2: 250k). Fewer tokens per word means
+          shorter sequences, cheaper attention, and more text per context window.
+          Single-paragraph numbers vary by domain; the aggregate benchmark over 20k
+          held-out paragraphs is in the Training &amp; Data tab.</p>
+      </div>
+    </div>
+
+    <div class="panel facts">
+      <div><strong>50,000</strong><span>vocab size</span></div>
+      <div><strong>1.0</strong><span>character coverage</span></div>
+      <div><strong>NFC</strong><span>normalization</span></div>
+      <div><strong>byte fallback</strong><span>no unknown tokens</span></div>
+      <div><strong>ZWJ/ZWNJ</strong><span>preserved exactly</span></div>
+    </div>
+  </section>
+
+  <!-- ============ GENERATE ============ -->
+  <section class="tab-panel" id="tab-generate">
+    <div class="hero compact">
+      <h2>Generate with the demo checkpoint</h2>
+      <p id="genStatus">Checking checkpoint…</p>
+    </div>
+    <div class="grid-2">
+      <div class="panel">
+        <div class="panel-head"><h3>Prompt</h3><span class="hint">Malayalam or empty</span></div>
+        <textarea id="genPrompt" class="short" maxlength="1200" spellcheck="false"
+          placeholder="ഉദാഹരണത്തിന്: കേരളത്തിലെ കാലാവസ്ഥ"></textarea>
+        <div class="suggestions" id="suggestions">
+          <button class="chip-btn" data-prompt="കേരളത്തിലെ കാലാവസ്ഥ">കേരളത്തിലെ കാലാവസ്ഥ</button>
+          <button class="chip-btn" data-prompt="മലയാള ഭാഷയുടെ ചരിത്രം">മലയാള ഭാഷയുടെ ചരിത്രം</button>
+          <button class="chip-btn" data-prompt="തിരുവനന്തപുരം നഗരം">തിരുവനന്തപുരം നഗരം</button>
+          <button class="chip-btn" data-prompt="">empty prompt</button>
+        </div>
+        <div class="controls">
+          <label>temperature <output id="tempVal">0.80</output>
+            <input type="range" id="temperature" min="0.1" max="1.4" step="0.05" value="0.8">
+          </label>
+          <label>max new tokens <output id="maxVal">96</output>
+            <input type="range" id="maxTokens" min="16" max="192" step="8" value="96">
+          </label>
+          <label>top-k <output id="topkVal">40</output>
+            <input type="range" id="topK" min="0" max="120" step="5" value="40">
+          </label>
+        </div>
+        <div class="actions">
+          <button class="primary" id="genBtn" type="button">Generate</button>
+          <span class="hint" id="genHint">A tiny checkpoint trained locally for the demo</span>
+        </div>
+      </div>
+      <div class="panel output-panel">
+        <div class="panel-head"><h3>Output</h3><span class="hint" id="genMeta"></span></div>
+        <div class="gen-output" id="genOutput"><span class="placeholder">Generated Malayalam appears here.</span></div>
+        <div class="error hidden" id="genError"></div>
+      </div>
+    </div>
+    <p class="footnote">This is an early pretraining checkpoint, not a product model. It is trained
+      from scratch on a measured corpus slice; short-range grammar and morphology show up first,
+      long-range coherence later. Numbers shown are measured, never estimated.</p>
+  </section>
+
+  <!-- ============ DATA ============ -->
+  <section class="tab-panel" id="tab-data">
+    <div class="hero compact">
+      <h2>Training &amp; data, from the logs</h2>
+      <p id="dataStatus">Loading measured stats…</p>
+      <p class="hint" id="dataConfig"></p>
+    </div>
+
+    <div class="metrics" id="dataMetrics"></div>
+
+    <div class="panel">
+      <div class="panel-head">
+        <h3>Training loss</h3>
+        <span class="hint" id="chartLegend"><span class="legend train"></span>train
+          <span class="legend val"></span>validation</span>
+      </div>
+      <canvas id="lossChart" height="240"></canvas>
+    </div>
+
+    <div class="grid-2">
+      <div class="panel">
+        <div class="panel-head"><h3>Corpus sources</h3><span class="hint">after cleaning + global dedup</span></div>
+        <div class="table-wrap"><table id="sourceTable"></table></div>
+        <p class="hint" id="scopeNote"></p>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><h3>Latest training samples</h3><span class="hint">greedy-free, T=0.8</span></div>
+        <div id="trainSamples" class="samples"><p class="hint">Samples appear once training starts.</p></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head"><h3>Tokenizer benchmark</h3>
+        <span class="hint">held-out evaluation corpus · lower tokens/word is better</span></div>
+      <div class="table-wrap"><table id="tokTable"></table></div>
+      <p class="hint">“Exact roundtrip” compares decoded text to the input. SentencePiece
+        collapses runs of spaces on decode, so SPM models score below the byte-level
+        tokenizers here; no Malayalam characters are lost (verified in
+        docs/stage1-tokenizer-assessment.md).</p>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head"><h3>Checkpoint evaluation</h3>
+        <span class="hint">held-out test documents · lower bits/char is better</span></div>
+      <div class="table-wrap"><table id="evalTable"></table></div>
+      <p class="hint">Ours is exact causal log-loss over held-out documents, converted to
+        bits per character. Baseline values are MLM pseudo-log-loss after masking 15% of
+        tokens, which uses bidirectional context and is a different estimator: compare
+        side by side, never aggregate. Baselines score the first 400 tokens of each
+        document. Pseudo-perplexity is reported in eval/results.json.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>മലയാളം SLM · Stage 0–6 tooling · tokenizer, corpus and training all local</span>
+  <span id="footerGpu"></span>
+</footer>
+
+<script src="/static/app.js"></script>
+</body>
+</html>

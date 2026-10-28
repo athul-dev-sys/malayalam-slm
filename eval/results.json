@@ -1,0 +1,48 @@
+{
+ "ours": {
+  "params": 16079104,
+  "n_docs": 300,
+  "n_tokens": 64206,
+  "n_chars": 330082,
+  "loss_nats_per_token": 4.6685003763017106,
+  "ppl": 106.53785588413727,
+  "tokens_per_char": 0.19451530225822675,
+  "bpc": 1.3101038094901951
+ },
+ "google/muril-base-cased": {
+  "hub": "google/muril-base-cased",
+  "params": 237755045,
+  "n_docs": 300,
+  "n_tokens": 55592,
+  "n_chars": 234260,
+  "max_tokens_per_doc": 400,
+  "nats_per_masked_token": 4.328152989903141,
+  "pseudo_ppl": 75.80414616530588,
+  "tokens_per_char": 0.23730897293605396,
+  "bpc": 1.4818058408811465
+ },
+ "xlm-roberta-base": {
+  "hub": "xlm-roberta-base",
+  "params": 278295186,
+  "n_docs": 300,
+  "n_tokens": 61084,
+  "n_chars": 224877,
+  "max_tokens_per_doc": 400,
+  "nats_per_masked_token": 1.6414363330848936,
+  "pseudo_ppl": 5.162579373003515,
+  "tokens_per_char": 0.2716329371167349,
+  "bpc": 0.6432518009894912
+ },
+ "ai4bharat/IndicBERTv2-MLM-only": {
+  "hub": "ai4bharat/IndicBERTv2-MLM-only",
+  "params": 278292880,
+  "n_docs": 300,
+  "n_tokens": 48550,
+  "n_chars": 246617,
+  "max_tokens_per_doc": 400,
+  "nats_per_masked_token": 3.441967761755811,
+  "pseudo_ppl": 31.248387090793813,
+  "tokens_per_char": 0.19686396314933682,
+  "bpc": 0.9775693151692776
+ }
+}

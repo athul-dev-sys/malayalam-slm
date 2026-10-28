@@ -66,8 +66,9 @@ def eval_causal(ckpt_path, docs, device):
             y = torch.tensor([chunk[1:]], dtype=torch.long, device=device)
             with torch.autocast(device_type="cuda" if device.startswith("cuda") else "cpu",
                                 dtype=torch.bfloat16, enabled=device.startswith("cuda")):
-                logits, _ = model(x)
-            nll = F.cross_entropy(logits[0].float(), y[0], reduction="sum")
+                _, loss = model(x, y)
+            # model returns the mean CE loss; multiply back to get the exact sum of nats
+            nll = loss * y.numel()
             total_nats += nll.item()
             total_tokens += len(chunk) - 1
     nats_per_tok = total_nats / total_tokens
@@ -92,11 +93,14 @@ def eval_mlm_baseline(hub_name, docs, device, seed=13, mask_frac=0.15, max_token
 
     total_nats = 0.0
     total_masked = 0
-    total_chars = sum(len(d) for d in docs)
+    total_chars = 0
     total_tokens = 0
     for d in docs:
-        enc = tok(d, return_tensors="pt", truncation=True, max_length=max_tokens)
+        enc = tok(d, return_tensors="pt", truncation=True, max_length=max_tokens,
+                  return_offsets_mapping=True)
         ids = enc["input_ids"][0]
+        # count only the prefix actually scored, so truncated docs don't dilute tok/char
+        total_chars += int(enc["offset_mapping"][0][:, 1].max())
         total_tokens += len(ids)
         labels = ids.clone()
         prob = torch.full((len(ids),), mask_frac)
@@ -121,6 +125,7 @@ def eval_mlm_baseline(hub_name, docs, device, seed=13, mask_frac=0.15, max_token
     return {
         "hub": hub_name, "params": n_params,
         "n_docs": len(docs), "n_tokens": total_tokens, "n_chars": total_chars,
+        "max_tokens_per_doc": max_tokens,
         "nats_per_masked_token": nats_per_masked,
         "pseudo_ppl": math.exp(nats_per_masked),
         "tokens_per_char": tok_per_char,

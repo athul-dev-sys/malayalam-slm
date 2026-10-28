@@ -12,6 +12,7 @@ the whole file as a single document).
 
 Usage: PYTHONIOENCODING=utf-8 python scripts/split_tokenize.py <tokenizer.model>
 """
+import argparse
 import gzip
 import hashlib
 import io
@@ -19,7 +20,6 @@ import json
 import os
 import re
 import struct
-import sys
 import time
 
 import numpy as np
@@ -45,18 +45,41 @@ def norm_key(s):
     return hashlib.blake2b(key.encode("utf-8"), digest_size=8).digest()
 
 
-def _open_text(path):
-    return gzip.open(path, "rt", encoding="utf-8", errors="replace") if path.endswith(".gz") else io.open(
-        path, "rt", encoding="utf-8", errors="replace"
-    )
+def _iter_lines(path, max_bytes=0):
+    """Yield decoded lines, optionally stopping after max_bytes of raw input."""
+    mode = "rb"
+    with (gzip.open(path, mode) if path.endswith(".gz") else io.open(path, mode)) as f:
+        if max_bytes <= 0:
+            for line in f:
+                yield line.decode("utf-8", errors="replace")
+            return
+        remaining = max_bytes
+        tail = b""
+        while remaining > 0:
+            chunk = f.read(min(1 << 20, remaining))
+            if not chunk:
+                break
+            remaining -= len(chunk)
+            parts = (tail + chunk).split(b"\n")
+            tail = parts.pop()
+            for p in parts:
+                yield p.decode("utf-8", errors="replace") + "\n"
+        if tail:
+            yield tail.decode("utf-8", errors="replace")
 
 
-def source_has_doc_sep(path, sample_chars=4_000_000):
-    with _open_text(path) as f:
-        return DOC_SEP in f.read(sample_chars)
+def source_has_doc_sep(path, max_bytes=0, sample_chars=4_000_000):
+    seen = 0
+    for line in _iter_lines(path, max_bytes):
+        if line.rstrip("\r\n") == DOC_SEP:
+            return True
+        seen += len(line)
+        if seen >= sample_chars:
+            return False
+    return False
 
 
-def iter_docs(path, para_docs):
+def iter_docs(path, para_docs, max_bytes=0):
     """Yield documents as lists of paragraph strings.
 
     para_docs=True: every blank-line paragraph block is its own document.
@@ -70,45 +93,47 @@ def iter_docs(path, para_docs):
             paras.append(" ".join(buf))
             buf.clear()
 
-    with _open_text(path) as f:
-        for line in f:
-            # \x1e is Unicode whitespace, so strip() would erase the marker before comparison
-            raw = line.rstrip("\r\n")
-            if raw == DOC_SEP:
-                flush_para()
-                if paras:
-                    yield paras
-                    paras = []
-                continue
-            s = raw.strip()
-            if not s:
-                flush_para()
-                if para_docs and paras:
-                    yield paras
-                    paras = []
-            else:
-                buf.append(s)
+    for line in _iter_lines(path, max_bytes):
+        # \x1e is Unicode whitespace, so strip() would erase the marker before comparison
+        raw = line.rstrip("\r\n")
+        if raw == DOC_SEP:
+            flush_para()
+            if paras:
+                yield paras
+                paras = []
+            continue
+        s = raw.strip()
+        if not s:
+            flush_para()
+            if para_docs and paras:
+                yield paras
+                paras = []
+        else:
+            buf.append(s)
     flush_para()
     if paras:
         yield paras
 
 
-def reduce_sources(sources, tmp_docs):
+def reduce_sources(sources, tmp_docs, limits=None):
     """Pass 1: global paragraph dedup, write surviving docs to temp file. Returns (n_docs, stats)."""
     seen = set()
     n_docs = 0
+    limits = limits or {}
     stats = {"per_source": {}, "global_dup_cross_source": 0, "documents_total": 0, "chars_total": 0}
 
     with io.open(tmp_docs, "wb") as out:
         for fname in sources:
             path = os.path.join(CLEAN, fname)
             name = fname[:-4] if fname.endswith(".txt") else fname[:-7]
-            para_docs = not source_has_doc_sep(path)
+            max_bytes = limits.get(fname, 0)
+            para_docs = not source_has_doc_sep(path, max_bytes)
             src = {
                 "docs": 0, "paras": 0, "paras_kept": 0, "cross_dup": 0,
                 "chars": 0, "doc_boundaries": "paragraph" if para_docs else "separator",
+                "max_bytes": max_bytes,
             }
-            for paras in iter_docs(path, para_docs):
+            for paras in iter_docs(path, para_docs, max_bytes):
                 kept = []
                 for p in paras:
                     src["paras"] += 1
@@ -235,21 +260,47 @@ def tokenize_split(sp, tmp_docs, labels, n_docs, stats):
 
 
 def main():
-    tok_path = sys.argv[1] if len(sys.argv) > 1 else os.path.join(
+    ap = argparse.ArgumentParser()
+    ap.add_argument("tokenizer", nargs="?", default=os.path.join(
         ROOT, "artifacts", "tokenizer", "malayalam_spm.model"
-    )
+    ))
+    ap.add_argument("--sources", default="", help="comma-separated file names under data/clean")
+    ap.add_argument("--max-mb", action="append", default=[], metavar="FILE=MB",
+                    help="bound one source's raw bytes (repeatable); unbounded otherwise")
+    args = ap.parse_args()
+    tok_path = args.tokenizer
+
+    limits = {}
+    for spec in args.max_mb:
+        name, _, mb = spec.partition("=")
+        name, mb = name.strip(), mb.strip()
+        if not name or not mb:
+            raise SystemExit(f"bad --max-mb spec: {spec!r} (expected FILE=MB)")
+        limits[name] = int(float(mb) * 1024 * 1024)
+
     sp = spm.SentencePieceProcessor(model_file=tok_path)
     os.makedirs(OUT, exist_ok=True)
     os.makedirs(WORK, exist_ok=True)
     t0 = time.time()
 
-    sources = sorted(f for f in os.listdir(CLEAN) if f.endswith((".txt", ".txt.gz")))
+    if args.sources:
+        sources = [s.strip() for s in args.sources.split(",") if s.strip()]
+    else:
+        sources = sorted(f for f in os.listdir(CLEAN) if f.endswith((".txt", ".txt.gz")))
     if not sources:
         raise SystemExit(f"no cleaned corpus files in {CLEAN}")
+    for fname in sources:
+        if not os.path.exists(os.path.join(CLEAN, fname)):
+            raise SystemExit(f"missing source: {os.path.join(CLEAN, fname)}")
+        if fname in limits:
+            size = os.path.getsize(os.path.join(CLEAN, fname))
+            if limits[fname] > size:
+                limits[fname] = size
     print("sources:", sources, flush=True)
+    print("limits:", {k: f"{v/1e6:.0f}MB" for k, v in limits.items()} or "none", flush=True)
 
     tmp_docs = os.path.join(WORK, "stage2_docs.tmp")
-    n_docs, stats = reduce_sources(sources, tmp_docs)
+    n_docs, stats = reduce_sources(sources, tmp_docs, limits)
     print(f"global dedup: {n_docs:,} docs, {stats['chars_total']:,} chars", flush=True)
 
     labels, n_test, n_val = make_split_labels(n_docs)
@@ -257,6 +308,11 @@ def main():
     tokenize_split(sp, tmp_docs, labels, n_docs, stats)
 
     stats["total_tokens"] = sum(s["tokens"] for s in stats["split"].values())
+    stats["source_scope"] = {
+        "sources": sources,
+        "max_bytes": limits,
+        "note": "bounded slice; rerun without --max-mb for full-corpus stats" if limits else "full cleaned sources",
+    }
     stats["tokenizer"] = tok_path
     stats["vocab_size"] = sp.get_piece_size()
     stats["split_seed"] = SPLIT_SEED
